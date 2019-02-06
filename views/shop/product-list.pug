@@ -18,6 +18,8 @@ block content
                             h2.product__price $#{product.price}
                             p.product__description #{product.description}                        
                         div.card__actions
-                            button.btn Add to Cart
+                           - var productID = product.id
+                            a.btn(href='/products/' + productID) Details 
+                            include ../includes/add-to-cart.pug
         else
             h1 No Products
