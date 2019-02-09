@@ -14,7 +14,7 @@ const postAddProduct = (req, res, next) => {
     const imageUrl = req.body.imageUrl;
     const price = req.body.price;
     const description = req.body.description;
-    const product = new Product(title, imageUrl, price, description);
+    const product = new Product(null,title, imageUrl, price, description);
     product.save();
     res.redirect('/');
 };
@@ -37,6 +37,24 @@ const getEditProduct = (req, res, next)=> {
     });
 };
 
+const postEditProduct = (req, res, next) => {
+    const prodId = req.body.productId;
+    const updatedTitle = req.body.title;
+    const updatedPrice = req.body.price;
+    const updatedImageUrl = req.body.imageUrl;
+    const updatedDesc = req.body.description;
+    const updatedProduct = new Product(
+        prodId,
+        updatedTitle,
+        updatedImageUrl,
+        updatedPrice,
+        updatedDesc,
+    
+    );    
+    updatedProduct.save();
+    res.redirect('/admin/products');
+}
+
 const getProducts = (req, res, next) => {
     Product.fetchAll((products) => {
         res.render('admin/products',{
@@ -46,9 +64,17 @@ const getProducts = (req, res, next) => {
         })
     });
 };
+
+const postDeleteProduct = (req, res, next) => {
+    const prodId = req.body.productId;
+    Product.deleteById(prodId);
+    res.redirect('/admin/products');
+}
 module.exports = {
     getAddProduct,
     postAddProduct,
     getEditProduct,
-    getProducts
+    postEditProduct,
+    getProducts,
+    postDeleteProduct
 }
