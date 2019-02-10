@@ -27,15 +27,15 @@ const getProduct = (req,res, next) => {
 };
 
 const getIndex = (req, res, next) => {
-    Product.fetchAll()
-    .then(([rows, fileData]) => {
+    Product.findAll()
+    .then((products) => {
         res.render('shop/index',{
-            prods:rows,
+            prods:products,
             pageTitle:'shop',
             path:'/'
         });
     })
-    .catch(err => console.log(err));
+    .catch(err => console.log(err)); 
 };
 
 const getCart = (req, res,  next) => {
@@ -98,4 +98,4 @@ module.exports = {
     postCartDeleteProduct,
     getOrders,
     getCheckout
-}
+} 
