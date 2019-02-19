@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({extended : false}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req,res,next) => {
-    User.findByPk(1).then(user => {
+    User.findByPk(4).then(user => {
         console.log(`${req.user} **********`); // undefined
         console.log(user);
         req.user = user;
@@ -40,7 +40,8 @@ app.use(get404);
 Product.belongsTo(User, {constraints: true, onDelete: 'CASCADE'});
 User.hasMany(Product);
 
-   // Force for State changes in products tables
+// sync() will create all table if they doesn't exist in database
+// Force for State changes in products tables
 sequelize.sync()
   .then(result => {
       return User.findByPk(1);
@@ -48,7 +49,7 @@ sequelize.sync()
   })
     .then (user => {
         if(!user) {
-            return User.create({name:'Omakr' , email:'Teste@test.com'});
+            return User.create({name:'Omar' , email:'Test@test.com'});
         }
         return user;
     })
